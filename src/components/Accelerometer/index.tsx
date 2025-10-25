@@ -1,16 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { View, Text, Alert, ActivityIndicator } from 'react-native';
 import { Accelerometer as Accel } from 'expo-sensors';
 
 import { styles } from './styles';
 
-export default function Accelerometer() {
+type PermissionsStatus = 'granted' | 'denied' | 'undetermined';
+type Props = {
+  hasStarted: boolean;
+};
+
+export default function Accelerometer({ hasStarted }: Props) {
   const [acceleration, setAcceleration] = useState({ x: 0, y: 0, z: 0 });
   const [magnitude, setMagnitude] = useState(0);
+  const [permission, setPermission] = useState<PermissionsStatus>('undetermined');
 
-  const [permission, setPermission] = useState<'granted' | 'denied' | 'undetermined'>(
-    'undetermined',
-  );
+  const subscriptionRef = useRef<any>(null);
 
   const checkPermission = async () => {
     try {
@@ -30,23 +34,41 @@ export default function Accelerometer() {
     }
   };
 
-  useEffect(() => {
-    checkPermission();
-  }, []);
+  const startAccelerometer = () => {
+    if (permission !== 'granted' || subscriptionRef.current) return;
 
-  useEffect(() => {
-    if (permission !== 'granted') return;
-
-    const subscription = Accel.addListener(data => {
+    const sub = Accel.addListener(data => {
       setAcceleration(data);
       const mag = Math.sqrt(data.x ** 2 + data.y ** 2 + data.z ** 2) - 1;
       setMagnitude(prev => (Math.abs(mag - prev) < 0.2 ? prev : mag));
     });
 
     Accel.setUpdateInterval(300);
+    subscriptionRef.current = sub;
+  };
 
-    return () => subscription.remove();
-  }, [permission]);
+  const stopAccelerometer = () => {
+    if (subscriptionRef.current) {
+      subscriptionRef.current.remove();
+      subscriptionRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    checkPermission();
+  }, []);
+
+  useEffect(() => {
+    if (hasStarted) {
+      startAccelerometer();
+    } else {
+      stopAccelerometer();
+    }
+
+    return () => {
+      stopAccelerometer();
+    };
+  }, [hasStarted]);
 
   return (
     <View style={styles.container}>

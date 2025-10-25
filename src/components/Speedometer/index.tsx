@@ -9,8 +9,8 @@ type Props = {
 export default function Speedometer({ speed }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.textSpeed}>{speed.toFixed(0)}</Text>
-      <Text style={styles.textSpeed}>km/h</Text>
+      <Text style={styles.text}>{speed.toFixed(0)}</Text>
+      <Text style={styles.text}>km/h</Text>
     </View>
   );
 }

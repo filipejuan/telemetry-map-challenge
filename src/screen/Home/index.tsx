@@ -4,7 +4,7 @@ import Map from '@/components/Map';
 
 import { styles } from './styles';
 
-export default function LoginScreen() {
+export default function Home() {
   return (
     <View style={styles.container}>
       <Map />

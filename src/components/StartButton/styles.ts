@@ -18,8 +18,7 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
-    color: '#000',
-    fontSize: 15,
+    color: '#FFF',
     fontWeight: 'bold',
   },
 });
