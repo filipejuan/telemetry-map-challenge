@@ -20,14 +20,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "react-native",
-    "@typescript-eslint",
-    "prettier",
-    "import"
-  ],
+  "plugins": ["react", "react-hooks", "react-native", "@typescript-eslint", "prettier", "import"],
   "rules": {
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
@@ -41,10 +34,7 @@
     "no-console": [
       "warn",
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "allow": ["warn", "error"]
       }
     ]
   },
