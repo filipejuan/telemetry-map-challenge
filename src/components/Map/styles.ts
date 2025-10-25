@@ -5,21 +5,10 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  accelerometerContainer: {
+  disabledView: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    bottom: 82,
-    left: 0,
-    right: 0,
-  },
-  speedometerContainer: {
-    position: 'absolute',
-    bottom: 100,
-    right: 30,
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 100,
-    left: 30,
   },
 });

@@ -1,15 +1,18 @@
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+
+import { useTelemetry } from '@/contexts/TelemetryContext';
 
 import { styles } from './styles';
 
-type Props = {
-  hasStarted: boolean;
-};
+export default function StartButton() {
+  const { hasStarted, toggleWatch } = useTelemetry();
 
-export default function StartButton({ hasStarted }: Props) {
   return (
-    <View style={[styles.container, { backgroundColor: hasStarted ? '#FF3B30' : '#34C759' }]}>
+    <TouchableOpacity
+      onPress={toggleWatch}
+      style={[styles.container, { backgroundColor: hasStarted ? '#FF3B30' : '#34C759' }]}
+    >
       <Text style={styles.text}>{hasStarted ? 'Parar' : 'Iniciar'}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
